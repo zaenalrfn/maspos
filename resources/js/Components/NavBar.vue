@@ -8,10 +8,12 @@ import SearchProdukKategori from "./SearchProdukKategori.vue";
     <nav class="bg-white border-b border-gray-100 rounded-lg">
         <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
-                <h1 class="text-[#1843C3] font-semibold text-lg">MASPOS</h1>
+                <Link :href="route('dashboard')">
+                    <h1 class="text-[#1843C3] font-semibold text-lg">MASPOS</h1>
+                </Link>
 
                 <div class="flex items-center gap-4">
-                    <Link href="/categories/create">
+                    <Link :href="route('categories.index')">
                         <div
                             class="bg-[#2C59E5] rounded-lg px-4 py-2 text-white flex items-center hover:bg-blue-700"
                         >
