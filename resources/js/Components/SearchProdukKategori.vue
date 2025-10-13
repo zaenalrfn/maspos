@@ -2,26 +2,13 @@
 import { ref } from "vue";
 import { usePage } from "@inertiajs/vue3";
 import { Search } from "lucide-vue-next";
-const categories = ref([
-    "Semua",
-    "Burger",
-    "Pizza",
-    "Minuman",
-    "Makanan Ringan",
-    "Roti",
-    "Kopi",
-    "Beer",
-    "Parfum",
-    "Buah",
-    "Kue",
-    "Makanan Ringan",
-    "Roti",
-    "Kopi",
-    "Beer",
-    "Parfum",
-    "Buah",
-    "Kue",
-]);
+interface Category {
+    id: number;
+    name: string;
+}
+const props = defineProps<{
+    categories: Category[];
+}>();
 
 const page = usePage();
 const isHome = page.url === "/dashboard";
@@ -55,7 +42,7 @@ const isHome = page.url === "/dashboard";
                         'bg-[#F6F8FB] text-[#2C59E5]': i !== 0,
                     }"
                 >
-                    {{ category }}
+                    {{ category.name }}
                 </button>
             </div>
         </div>

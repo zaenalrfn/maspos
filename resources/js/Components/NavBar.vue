@@ -2,6 +2,13 @@
 import { Link } from "@inertiajs/vue3";
 import { Plus, ShoppingCart } from "lucide-vue-next";
 import SearchProdukKategori from "./SearchProdukKategori.vue";
+interface Category {
+    id: number;
+    name: string;
+}
+const props = defineProps<{
+    categories: Category[];
+}>();
 </script>
 
 <template>
@@ -52,7 +59,7 @@ import SearchProdukKategori from "./SearchProdukKategori.vue";
                     </Link>
                 </div>
             </div>
-            <SearchProdukKategori />
+            <SearchProdukKategori :categories="categories" />
         </div>
     </nav>
 </template>
