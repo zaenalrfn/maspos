@@ -19,9 +19,9 @@ Route::middleware('auth')->group(function () {
         ->as('categories.')
         ->group(function () {
             Route::get('/categories', 'index')->name('index');
-            Route::post('/categories/{category}', 'store')->name('store');
-            Route::put('/categories/{category}', 'update')->name('update');
-            Route::delete('/categories/{category}', 'destroy')->name('destroy');
+            Route::post('/categories/create', 'store')->name('store');
+            Route::put('/categories/update/{category}', 'update')->name('update');
+            Route::delete('/categories/delete/{category}', 'destroy')->name('destroy');
         });
 });
 

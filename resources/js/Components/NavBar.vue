@@ -17,7 +17,6 @@ import SearchProdukKategori from "./SearchProdukKategori.vue";
                         <div
                             class="bg-[#2C59E5] rounded-lg px-4 py-2 text-white flex items-center hover:bg-blue-700"
                         >
-                            <Plus color="white" />
                             <span class="ml-2">Tambah Kategori</span>
                         </div>
                     </Link>
