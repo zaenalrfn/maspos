@@ -2,6 +2,11 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head } from "@inertiajs/vue3";
 import ProductComponent from "@/Components/ProductComponent.vue";
+import { Product } from "@/types/maspos";
+
+const props = defineProps<{
+    products: Product[];
+}>();
 </script>
 
 <template>
@@ -11,7 +16,7 @@ import ProductComponent from "@/Components/ProductComponent.vue";
         <div class="py-12">
             <div class="w-full">
                 <div>
-                    <ProductComponent />
+                    <ProductComponent :products="products" />
                 </div>
             </div>
         </div>

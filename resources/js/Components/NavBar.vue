@@ -21,7 +21,7 @@ import SearchProdukKategori from "./SearchProdukKategori.vue";
                         </div>
                     </Link>
 
-                    <Link href="/products/create">
+                    <Link :href="route('products.create')">
                         <div
                             class="bg-[#2C59E5] rounded-lg px-4 py-2 text-white flex items-center hover:bg-blue-700"
                         >
