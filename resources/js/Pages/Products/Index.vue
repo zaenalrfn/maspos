@@ -59,7 +59,6 @@ const handleSubmit = () => {
     form.post(route("products.store"), {
         forceFormData: true,
         onSuccess: () => {
-            alert("Produk berhasil ditambahkan!");
             form.reset();
         },
     });
@@ -69,7 +68,7 @@ const handleSubmit = () => {
 <template>
     <Head title="Tambah Produk" />
 
-    <AuthenticatedLayout>
+    <AuthenticatedLayout :categories="categories">
         <div class="py-12">
             <div class="w-full">
                 <Notifications />

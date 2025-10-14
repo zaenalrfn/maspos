@@ -73,7 +73,7 @@ const openDeleteModal = (category: any) => {
 
 <template>
     <Head title="Daftar Kategori" />
-    <AuthenticatedLayout>
+    <AuthenticatedLayout :categories="categories">
         <div class="px-4 py-6 mx-auto sm:px-6 lg:px-8 max-w-7xl">
             <Notifications />
             <!-- Page Header -->
