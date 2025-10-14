@@ -9,6 +9,7 @@ interface Category {
 const props = defineProps<{
     categories: Category[];
 }>();
+const emit = defineEmits(["filter", "search"]);
 </script>
 
 <template>
@@ -59,7 +60,11 @@ const props = defineProps<{
                     </Link>
                 </div>
             </div>
-            <SearchProdukKategori :categories="categories" />
+            <SearchProdukKategori
+                :categories="categories"
+                @filter="(id) => emit('filter', id)"
+                @search="(val) => emit('search', val)"
+            />
         </div>
     </nav>
 </template>

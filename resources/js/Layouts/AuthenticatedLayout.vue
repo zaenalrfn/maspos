@@ -8,12 +8,19 @@ interface Category {
 const props = defineProps<{
     categories: Category[];
 }>();
+const emit = defineEmits(["filter", "search"]);
 </script>
 
 <template>
     <div>
         <div class="min-h-screen p-4 bg-[#EDF0F2] md:p-8">
-            <Navbar :categories="categories" />
+            <Notifications />
+            <!-- Navigation -->
+            <Navbar
+                :categories="categories"
+                @filter="(id) => emit('filter', id)"
+                @search="(val) => emit('search', val)"
+            />
 
             <!-- Page Content -->
             <main>

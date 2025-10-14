@@ -8,6 +8,9 @@ class ProductService
 {
     public function getAllProducts()
     {
-        return Product::select('id', 'name', 'price', 'image')->latest('created_at')->get();
+        return Product::with(['category:id,name'])
+            ->select('id', 'name', 'price', 'image', 'category_id')
+            ->latest('created_at')
+            ->get();
     }
 }

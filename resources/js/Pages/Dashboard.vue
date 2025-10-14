@@ -3,8 +3,8 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head, usePage } from "@inertiajs/vue3";
 import ProductComponent from "@/Components/ProductComponent.vue";
 import { Product } from "@/types/maspos";
-import { computed, watch } from "vue";
-import { Notifications, notify } from "@kyvg/vue3-notification";
+import { computed, ref, watch } from "vue";
+import { notify } from "@kyvg/vue3-notification";
 
 interface Category {
     id: number;
@@ -39,17 +39,43 @@ const props = defineProps<{
     products: Product[];
     categories: Category[];
 }>();
+
+const searchQuery = ref("");
+const activeCategory = ref<number | null>(null);
+const filteredProducts = computed(() => {
+    return props.products.filter((p) => {
+        const matchSearch = p.name
+            .toLowerCase()
+            .includes(searchQuery.value.toLowerCase());
+        const matchCategory =
+            !activeCategory.value ||
+            (p.category && p.category.id === activeCategory.value);
+        return matchSearch && matchCategory;
+    });
+});
+
+function handleFilter(categoryId: number | null) {
+    activeCategory.value = categoryId;
+}
+
+function handleSearch(value: string) {
+    searchQuery.value = value;
+}
 </script>
 
 <template>
     <Head title="Dashboard" />
 
-    <AuthenticatedLayout :categories="categories">
-        <Notifications />
+    <AuthenticatedLayout
+        :categories="categories"
+        @filter="handleFilter"
+        @search="handleSearch"
+    >
         <div class="py-12">
+            <Notifications />
             <div class="w-full">
                 <div>
-                    <ProductComponent :products="products" />
+                    <ProductComponent :products="filteredProducts" />
                 </div>
             </div>
         </div>

@@ -31,7 +31,7 @@ class ProductController extends Controller
             Product::create($products);
 
             return redirect()
-                ->route('dasboard')
+                ->route('dashboard')
                 ->with('success', 'Produk berhasil dibuat...');
         } catch (\Exception $e) {
             return redirect()
