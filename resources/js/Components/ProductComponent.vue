@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { Product } from "@/types/maspos";
 import { Plus, Trash2 } from "lucide-vue-next";
-import { router } from "@inertiajs/vue3";
 import ModalDelete from "@/Components/ModalDelete.vue";
 import { useCartStore } from "@/stores/cart";
 import { ref } from "vue";
 import { notify } from "@kyvg/vue3-notification";
+import { formatRupiah } from "@/utils/formatRupiah";
 
 const props = defineProps<{
     products: Product[];
@@ -20,6 +20,19 @@ const selectedProduct = ref<Product | { id: null; name: null }>({
     name: null,
 });
 const openDeleteModal = (product: Product) => {
+    const isInCart = cart.items.some((item) => item.id === product.id);
+
+    // kalau ada dicart produk ga bisa di hapus
+    if (isInCart) {
+        notify({
+            title: "Tidak Bisa Dihapus",
+            text: "Produk ini masih ada di keranjang!",
+            type: "error",
+            duration: 3000,
+        });
+        return;
+    }
+
     showModalDelete.value = true;
     selectedProduct.value = { ...product };
 };
@@ -76,7 +89,7 @@ function addToCart(product: Product) {
                 {{ product.name }}
             </h3>
             <p class="font-bold text-base text-[#23A948]">
-                Rp {{ product.price.toLocaleString("id-ID") }}
+                {{ formatRupiah(product.price) }}
             </p>
             <button
                 @click="addToCart(product)"

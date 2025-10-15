@@ -2,17 +2,10 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import { Head, router } from "@inertiajs/vue3";
 import { useCartStore } from "@/stores/cart";
-import { computed } from "vue";
+import { Plus, Minus } from "lucide-vue-next";
+import { formatRupiah } from "@/utils/formatRupiah";
 
 const cart = useCartStore();
-
-const totalFormatted = computed(() =>
-    new Intl.NumberFormat("id-ID", {
-        style: "currency",
-        currency: "IDR",
-        minimumFractionDigits: 0,
-    }).format(cart.totalAmount)
-);
 
 function handleCheckout() {
     router.visit("/transactions");
@@ -68,12 +61,7 @@ function goBack() {
 
                                 <!-- Harga -->
                                 <td class="px-4 py-4">
-                                    Rp
-                                    {{
-                                        Number(item.price).toLocaleString(
-                                            "id-ID"
-                                        )
-                                    }}
+                                    {{ formatRupiah(item.price) }}
                                 </td>
 
                                 <!-- Jumlah -->
@@ -89,7 +77,7 @@ function goBack() {
                                             class="px-2 py-1 bg-gray-200 rounded hover:bg-gray-300 disabled:opacity-50"
                                             :disabled="item.quantity <= 1"
                                         >
-                                            -
+                                            <Minus class="w-5 h-5" />
                                         </button>
                                         <span class="w-6 text-center">{{
                                             item.quantity
@@ -103,7 +91,7 @@ function goBack() {
                                             "
                                             class="px-2 py-1 bg-gray-200 rounded hover:bg-gray-300"
                                         >
-                                            +
+                                            <Plus class="w-5 h-5" />
                                         </button>
                                     </div>
                                 </td>
@@ -112,19 +100,15 @@ function goBack() {
                                 <td
                                     class="px-4 py-4 font-semibold text-gray-700"
                                 >
-                                    Rp
                                     {{
-                                        (
-                                            item.price * item.quantity
-                                        ).toLocaleString("id-ID")
+                                        formatRupiah(item.price * item.quantity)
                                     }}
                                 </td>
 
                                 <!-- Hapus -->
-                                <td
-                                    class="px-4 py-4 text-red-500 cursor-pointer"
-                                >
+                                <td class="px-4 py-4 text-white cursor-pointer">
                                     <button
+                                        class="px-4 py-2 rounded-lg bg-[#FF2928] hover:bg-red-700"
                                         @click="cart.removeFromCart(item.id)"
                                     >
                                         Hapus
@@ -181,7 +165,7 @@ function goBack() {
                                     class="px-2 py-1 bg-gray-200 rounded hover:bg-gray-300 disabled:opacity-50"
                                     :disabled="item.quantity <= 1"
                                 >
-                                    -
+                                    <Minus class="w-5 h-5" />
                                 </button>
                                 <span class="w-6 text-center">{{
                                     item.quantity
@@ -195,7 +179,7 @@ function goBack() {
                                     "
                                     class="px-2 py-1 bg-gray-200 rounded hover:bg-gray-300"
                                 >
-                                    +
+                                    <Plus class="w-5 h-5" />
                                 </button>
                             </div>
                             <div
@@ -232,13 +216,13 @@ function goBack() {
                 >
                     <button
                         @click="goBack"
-                        class="px-5 py-2 text-gray-800 bg-gray-200 rounded-lg hover:bg-gray-300"
+                        class="px-5 py-2 text-[#2C59E5] border border-[#2C59E5] rounded-lg hover:bg-[#2C59E5] hover:text-white bg-transparent"
                     >
                         Kembali
                     </button>
                     <button
                         @click="handleCheckout"
-                        class="px-5 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700"
+                        class="px-5 py-2 text-white bg-[#2C59E5] rounded-lg hover:bg-blue-700"
                         :disabled="cart.items.length === 0"
                     >
                         Checkout

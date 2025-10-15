@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { watch, computed } from "vue";
+import { watch, ref, computed } from "vue";
 import { useForm, Head, usePage } from "@inertiajs/vue3";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import InputError from "@/Components/InputError.vue";
 import { Notifications, notify } from "@kyvg/vue3-notification";
+import { formatRupiahInput, parseRupiahToNumber } from "@/utils/formatRupiah";
 
 interface Category {
     id: number;
@@ -38,21 +39,39 @@ watch(
     { immediate: true }
 );
 
+// handle input rupiah
+const inputRupiah = ref({
+    price: 0 as number,
+});
+
 const form = useForm({
     name: "",
-    price: "",
+    price: 0,
     category_id: "",
     image: null as File | null,
 });
 
+const handleInput = (event: InputEvent) => {
+    const target = event.target as HTMLInputElement;
+    const rawValue = target.value;
+    const numericValue = parseRupiahToNumber(rawValue);
+    inputRupiah.value.price = numericValue;
+    form.price = numericValue;
+    target.value = formatRupiahInput(numericValue.toString());
+};
+
+const imagePreview = ref<string | null>(null);
+
 // handle file upload
-const handleFileChange = (e: Event) => {
-    const target = e.target as HTMLInputElement;
-    const file = target.files?.[0];
+function handleFileChange(event: Event) {
+    const target = event.target as HTMLInputElement;
+    const file = target.files ? target.files[0] : null;
+
     if (file) {
         form.image = file;
+        imagePreview.value = URL.createObjectURL(file);
     }
-};
+}
 
 // submit data
 const handleSubmit = () => {
@@ -98,6 +117,7 @@ const handleSubmit = () => {
                                     class="flex flex-col items-center justify-center"
                                 >
                                     <div
+                                        v-if="!imagePreview"
                                         class="flex items-center justify-center w-12 h-12 mb-2 bg-blue-100 rounded-full"
                                     >
                                         <svg
@@ -115,9 +135,18 @@ const handleSubmit = () => {
                                             />
                                         </svg>
                                     </div>
+
+                                    <!-- Preview gambar -->
+                                    <div v-else class="mb-2">
+                                        <img
+                                            :src="imagePreview"
+                                            alt="Preview"
+                                            class="object-cover w-32 h-32 border rounded-lg"
+                                        />
+                                    </div>
+
                                     <p class="text-sm text-gray-600">
-                                        Seret & jatuhkan file, atau klik untuk
-                                        unggah
+                                        klik untuk unggah
                                     </p>
                                     <p class="mt-1 text-xs text-gray-400">
                                         Format yang didukung: JPG, PNG
@@ -150,12 +179,17 @@ const handleSubmit = () => {
                                     for="price"
                                     class="block mb-1 text-sm font-medium text-gray-700"
                                 >
-                                    Harga
-                                </label>
+                                    Harga</label
+                                >
                                 <input
                                     id="price"
-                                    v-model="form.price"
-                                    type="number"
+                                    :value="
+                                        formatRupiahInput(
+                                            inputRupiah.price.toString()
+                                        )
+                                    "
+                                    @input="handleInput"
+                                    type="text"
                                     placeholder="Harga"
                                     class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-400 focus:outline-none"
                                 />

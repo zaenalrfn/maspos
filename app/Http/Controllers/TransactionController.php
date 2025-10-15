@@ -49,11 +49,17 @@ class TransactionController extends Controller
 
             DB::commit();
 
-            // Respon inertia redirect ke halaman sukses
-            return redirect()->route('dashboard')->with('success', 'Transaksi berhasil dibuat!');
+            return redirect()->route('transactions.checkout.success', $transaction);
         } catch (\Throwable $th) {
             DB::rollBack();
             return back()->with('error', 'Gagal memproses transaksi: ' . $th->getMessage());
         }
+    }
+    public function checkoutSuccess(Transaction $transaction)
+    {
+        return Inertia::render('Checkout/CheckoutSuccess', [
+            'transaction_createdAt' => $transaction->created_at->translatedFormat('d F Y'),
+            'total_amount' => $transaction['total_amount'],
+        ]);
     }
 }

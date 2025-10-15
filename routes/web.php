@@ -43,6 +43,7 @@ Route::middleware('auth')->group(function () {
         ->group(function () {
             Route::get('/transactions', 'index')->name('index');
             Route::post('/transactions/create', 'store')->name('store');
+            Route::get('/checkout/success/{transaction}', 'checkoutSuccess')->name('checkout.success');
         });
 });
 

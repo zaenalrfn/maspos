@@ -33,23 +33,23 @@ watch(searchQuery, (val) => {
 
 <template>
     <div v-if="isHome" class="py-3 border-t border-gray-100">
-        <div class="flex items-center gap-3 overflow-x-auto scrollbar-hide">
+        <div class="flex flex-col items-center gap-3 md:flex-row">
             <!-- Search -->
             <div
-                class="flex items-center bg-[#F6F8FB] rounded-lg px-3 py-2 shadow-sm border border-gray-200 min-w-[200px] flex-shrink-0"
+                class="flex items-center bg-[#F6F8FB] md:mb-0 mb-2 py-1 rounded-lg px-3 shadow-sm border-gray-200 w-full md:w-[200px] flex-shrink-0"
             >
                 <Search class="text-[#2C59E5]" />
                 <input
                     v-model="searchQuery"
                     type="text"
                     placeholder="Cari nama produk..."
-                    class="flex-1 ml-2 text-sm text-gray-700 bg-transparent border-none focus:outline-none"
+                    class="flex-1 ml-2 text-sm text-gray-700 bg-transparent border-none !outline-none focus:!outline-none focus:!ring-0"
                 />
             </div>
 
             <!-- Kategori list scrollable -->
             <div
-                class="flex items-center gap-2 pb-1 overflow-x-auto scrollbar-hide"
+                class="flex items-center w-full gap-2 pb-1 overflow-x-scroll scrollbar-hide"
             >
                 <button
                     class="px-4 py-1.5 rounded-lg text-sm font-medium whitespace-nowrap transition border border-[#2C59E5]"
