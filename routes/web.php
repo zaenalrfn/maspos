@@ -1,11 +1,11 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
-use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\TransactionController;
 use Inertia\Inertia;
 
 Route::get('/', function () {
@@ -17,6 +17,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
 });
 
 Route::middleware('auth')->group(function () {
+    Route::get('/cart', function () {
+        return Inertia::render('Cart/Index');
+    })->name('cart.index');
     Route::controller(CategoryController::class)
         ->as('categories.')
         ->group(function () {
@@ -33,6 +36,13 @@ Route::middleware('auth')->group(function () {
             Route::post('/products/create', 'store')->name('store');
             Route::put('/products/update/{product}', 'update')->name('update');
             Route::delete('/products/delete/{product}', 'destroy')->name('destroy');
+        });
+
+    Route::controller(TransactionController::class)
+        ->as('transactions.')
+        ->group(function () {
+            Route::get('/transactions', 'index')->name('index');
+            Route::post('/transactions/create', 'store')->name('store');
         });
 });
 

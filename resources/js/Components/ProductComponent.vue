@@ -3,11 +3,16 @@ import { Product } from "@/types/maspos";
 import { Plus, Trash2 } from "lucide-vue-next";
 import { router } from "@inertiajs/vue3";
 import ModalDelete from "@/Components/ModalDelete.vue";
+import { useCartStore } from "@/stores/cart";
 import { ref } from "vue";
+import { notify } from "@kyvg/vue3-notification";
 
 const props = defineProps<{
     products: Product[];
 }>();
+
+// state management
+const cart = useCartStore();
 
 const showModalDelete = ref(false);
 const selectedProduct = ref<Product | { id: null; name: null }>({
@@ -18,6 +23,23 @@ const openDeleteModal = (product: Product) => {
     showModalDelete.value = true;
     selectedProduct.value = { ...product };
 };
+
+function addToCart(product: Product) {
+    cart.addToCart({
+        id: product.id,
+        name: product.name,
+        price: Number(product.price),
+        image: product.image,
+        quantity: 1,
+    });
+
+    notify({
+        title: "Berhasil!",
+        text: `${product.name} ditambahkan ke keranjang.`,
+        type: "success",
+        duration: 2000,
+    });
+}
 </script>
 
 <template>
@@ -57,6 +79,7 @@ const openDeleteModal = (product: Product) => {
                 Rp {{ product.price.toLocaleString("id-ID") }}
             </p>
             <button
+                @click="addToCart(product)"
                 class="w-full px-3 flex items-center justify-center font-medium py-2 mt-2 text-base text-[#F5F5F5] transition bg-[#2C59E5] rounded-lg hover:bg-blue-700"
             >
                 <Plus color="white" />
