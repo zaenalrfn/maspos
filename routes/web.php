@@ -6,6 +6,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\UpdateProfileController;
 use Inertia\Inertia;
 
 Route::get('/', function () {
@@ -14,6 +15,9 @@ Route::get('/', function () {
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/users/{id}/image', [UpdateProfileController::class, 'getImage'])->name('users.get-image');
+    Route::put('/users/{id}/update-image', [UpdateProfileController::class, 'updateImage'])->name('users.update-image');
+    Route::delete('/users/{id}/remove-image', [UpdateProfileController::class, 'removeImage'])->name('users.remove-image');
 });
 
 Route::middleware('auth')->group(function () {

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Link } from "@inertiajs/vue3";
+import { Link, usePage } from "@inertiajs/vue3";
 import { Plus, ShoppingCart, Menu, X } from "lucide-vue-next";
 import SearchProdukKategori from "./SearchProdukKategori.vue";
 import { computed, ref } from "vue";
@@ -11,6 +11,7 @@ interface Category {
 const props = defineProps<{
     categories: Category[];
 }>();
+const user = usePage().props.auth.user;
 const emit = defineEmits(["filter", "search"]);
 
 // state management
@@ -102,11 +103,15 @@ const menuOpen = ref(false);
                             class="rounded-lg px-4 py-2 gap-2 text-[#0F0F0F] flex items-center"
                         >
                             <img
-                                src="/assets/images/profil.png"
+                                :src="
+                                    user.image
+                                        ? `/storage/${user.image}`
+                                        : '/assets/images/no_image.jpg'
+                                "
                                 alt="profil"
-                                class="w-[48px] h-[48px] rounded-full"
+                                class="w-[48px] h-[48px] object-fill rounded-full"
                             />
-                            <span>Ahmad</span>
+                            <span>{{ user.name }}</span>
                         </div>
                     </Link>
                 </div>

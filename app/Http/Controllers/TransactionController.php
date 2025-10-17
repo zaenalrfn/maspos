@@ -39,7 +39,7 @@ class TransactionController extends Controller
             // Simpan detail item transaksi
             foreach ($validated['items'] as $item) {
                 TransactionItem::create([
-                    'transaction_id' => $transaction->id,
+                    'transaction_code' => $transaction->transaction_code,
                     'product_id' => $item['product_id'],
                     'quantity' => $item['quantity'],
                     'price' => $item['price'],
