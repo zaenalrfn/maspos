@@ -17,7 +17,7 @@ class CategorySeeder extends Seeder
             ['name' => 'Pizza'],
             ['name' => 'Burger'],
             ['name' => 'Snack'],
-            ['name' => 'Minuman'],
+            ['name' => 'Drink'],
         ];
         foreach ($categories as $category) {
             Category::updateOrCreate($category);

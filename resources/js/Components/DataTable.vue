@@ -66,7 +66,7 @@ const table = useVueTable({
         emits("page-change", pagination.value);
     },
     getCoreRowModel: getCoreRowModel(),
-    getFilteredRowModel: getFilteredRowModel(), // 🔍 aktifkan filtering
+    getFilteredRowModel: getFilteredRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
 });

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import { Head, router } from "@inertiajs/vue3";
+import { Link, Head, router } from "@inertiajs/vue3";
 import { useCartStore } from "@/stores/cart";
 import { Plus, Minus } from "lucide-vue-next";
 import { formatRupiah } from "@/utils/formatRupiah";
@@ -21,9 +21,17 @@ function goBack() {
 
     <AuthenticatedLayout :categories="[]">
         <div class="w-full py-10 mx-auto">
-            <div class="relative bg-white rounded-lg shadow-sm">
+            <div class="mb-3 w-full flex justify-end">
+                <Link :href="route('transactions.history')">
+                    <button
+                        class="px-4 py-2 bg-[#2C59E5] hover:bg-blue-700 rounded-lg text-white"
+                    >
+                        Riwayat Transaksi
+                    </button>
+                </Link>
+            </div>
+            <div class="relative bg-white rounded-lg">
                 <!-- Tabel untuk layar besar -->
-
                 <div
                     class="hidden rounded-lg overflow-x-auto max-h-[65vh] md:block hide-scrollbar"
                 >

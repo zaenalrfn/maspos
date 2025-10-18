@@ -48,6 +48,9 @@ Route::middleware('auth')->group(function () {
             Route::get('/transactions', 'index')->name('index');
             Route::post('/transactions/create', 'store')->name('store');
             Route::get('/checkout/success/{transaction}', 'checkoutSuccess')->name('checkout.success');
+            Route::get('/transactions/history', 'transactionHistory')->name('history');
+            Route::get('/transactions/{transaction_code}', 'transactionHistoryDetail')
+                ->name('show');
         });
 });
 

@@ -20,7 +20,7 @@ function handleCheckout() {
     <Head title="Checkout" />
 
     <AuthenticatedLayout :categories="[]">
-        <div class="flex flex-col items-center py-10">
+        <div class="relative flex flex-col items-center py-10">
             <div class="w-full mb-5 text-left md:w-3/4 lg:w-1/2">
                 <Link :href="route('cart.index')">
                     <button
@@ -30,10 +30,6 @@ function handleCheckout() {
                     </button>
                 </Link>
             </div>
-
-            <!-- Tombol kembali -->
-
-            <!-- Container utama checkout -->
             <div
                 class="w-full p-6 bg-white md:w-3/4 lg:w-1/2 rounded-xl md:p-8"
             >
@@ -100,26 +96,34 @@ function handleCheckout() {
                         :options="checkout.paymentOptions"
                     />
                 </div>
+            </div>
 
-                <!-- Total Tagihan -->
+            <div
+                class="fixed bottom-0 left-0 flex items-center justify-between w-full gap-6 p-5 bg-white border-t border-gray-200 shadow-md"
+            >
+                <!-- Bagian Total -->
                 <div
-                    class="flex items-center justify-between py-4 mb-6 border-t border-b border-gray-100"
+                    class="flex flex-col flex-1 sm:flex-row sm:items-center sm:gap-3"
                 >
-                    <p class="font-medium text-gray-700">Total Tagihan:</p>
-                    <p class="text-xl font-bold text-[#2C59E5]">
+                    <p class="text-sm text-gray-600 sm:text-base">
+                        Total Tagihan:
+                    </p>
+                    <p class="text-lg sm:text-xl font-bold text-[#2C59E5]">
                         Rp {{ totalAmount.toLocaleString("id-ID") }}
                     </p>
                 </div>
 
-                <!-- Tombol checkout -->
-                <button
-                    @click="handleCheckout"
-                    :disabled="checkout.isProcessing || !cart.items.length"
-                    class="bg-[#2C59E5] hover:bg-blue-700 transition text-white w-full py-3 rounded-lg font-semibold disabled:opacity-50"
-                >
-                    <span v-if="checkout.isProcessing">Memproses...</span>
-                    <span v-else>Bayar Sekarang</span>
-                </button>
+                <!-- Tombol Checkout -->
+                <div class="flex-1 max-w-xs">
+                    <button
+                        @click="handleCheckout"
+                        :disabled="checkout.isProcessing || !cart.items.length"
+                        class="bg-[#2C59E5] hover:bg-blue-700 transition text-white w-full py-3 rounded-lg font-semibold disabled:opacity-50"
+                    >
+                        <span v-if="checkout.isProcessing">Memproses...</span>
+                        <span v-else>Bayar Sekarang</span>
+                    </button>
+                </div>
             </div>
         </div>
     </AuthenticatedLayout>

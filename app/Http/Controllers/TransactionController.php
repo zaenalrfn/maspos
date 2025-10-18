@@ -62,4 +62,45 @@ class TransactionController extends Controller
             'total_amount' => $transaction['total_amount'],
         ]);
     }
+
+    public function transactionHistory(Request $request)
+    {
+        $search = $request->input('search');
+
+        $query = Transaction::orderBy('created_at', 'desc');
+
+        if ($search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('transaction_code', 'like', "%{$search}%")
+                    ->orWhere('payment_method', 'like', "%{$search}%")
+                    ->orWhere('status', 'like', "%{$search}%");
+            });
+        }
+
+        $transactions = $query->paginate(20)->withQueryString();
+
+        return Inertia::render('TransactionHistory/Index', [
+            'transactions' => $transactions,
+            'filters' => [
+                'search' => $search,
+            ],
+        ]);
+    }
+
+    public function transactionHistoryDetail($transaction_code)
+    {
+        $transaction = Transaction::with([
+            'transactionItems.product' => function ($query) {
+                $query->select('id', 'name', 'category_id');
+            },
+            'transactionItems.product.category' => function ($query) {
+                $query->select('id', 'name');
+            }
+        ])->where('transaction_code', $transaction_code)
+            ->firstOrFail();
+
+        return Inertia::render('TransactionHistory/TransactionHistoryDetail', [
+            'transaction' => $transaction,
+        ]);
+    }
 }
