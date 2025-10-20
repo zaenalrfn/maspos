@@ -24,7 +24,7 @@ function handleCheckout() {
             <div class="w-full mb-5 text-left md:w-3/4 lg:w-1/2">
                 <Link :href="route('cart.index')">
                     <button
-                        class="px-5 py-2 text-white bg-[#2C59E5] rounded-lg hover:bg-blue-700 transition"
+                        class="px-5 py-2 text-[#2C59E5] border border-[#2C59E5] rounded-lg hover:bg-[#2C59E5] hover:text-white bg-transparent"
                     >
                         Kembali
                     </button>
