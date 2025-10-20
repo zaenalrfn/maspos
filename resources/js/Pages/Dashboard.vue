@@ -47,9 +47,11 @@ const filteredProducts = computed(() => {
         const matchSearch = p.name
             .toLowerCase()
             .includes(searchQuery.value.toLowerCase());
+
         const matchCategory =
             !activeCategory.value ||
-            (p.category && p.category.id === activeCategory.value);
+            (p.category && (p.category as any)?.id === activeCategory.value);
+
         return matchSearch && matchCategory;
     });
 });
