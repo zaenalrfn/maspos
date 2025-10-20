@@ -1,101 +1,98 @@
 <script setup lang="ts">
+import { Product } from "@/types/maspos";
+import { Plus, Trash2 } from "lucide-vue-next";
+import ModalDelete from "@/Components/ModalDelete.vue";
+import { useCartStore } from "@/stores/cart";
 import { ref } from "vue";
-import { type Product } from "@/types/maspos";
-import { Plus } from "lucide-vue-next";
+import { notify } from "@kyvg/vue3-notification";
+import { formatRupiah } from "@/utils/formatRupiah";
 
-const products = ref<Product[]>([
-    {
-        id: 1,
-        name: "Pepperoni Cheese",
-        price: 45000,
-        category: "Pizza",
-        image: "",
-    },
-    {
-        id: 2,
-        name: "Pepperoni Fiesta",
-        price: 55000,
-        category: "Pizza",
-        image: "",
-    },
-    {
-        id: 3,
-        name: "Smoky Bacon Ranch",
-        price: 47500,
-        category: "Pizza",
-        image: "",
-    },
-    {
-        id: 4,
-        name: "Mediterranean Feast",
-        price: 57000,
-        category: "Pizza",
-        image: "",
-    },
-    {
-        id: 5,
-        name: "Mushroom & Truffle",
-        price: 38000,
-        category: "Pizza",
-        image: "",
-    },
-    {
-        id: 6,
-        name: "French Fries",
-        price: 18000,
-        category: "Snack",
-        image: "",
-    },
-    {
-        id: 7,
-        name: "Burger Gilz",
-        price: 29000,
-        category: "Burger",
-        image: "",
-    },
-    {
-        id: 8,
-        name: "Big Mac Cheese",
-        price: 31000,
-        category: "Burger",
-        image: "",
-    },
-    {
-        id: 9,
-        name: "Lechy Tea",
-        price: 12000,
-        category: "Drink",
-        image: "",
-    },
-    {
-        id: 10,
-        name: "Coca Cola",
-        price: 10000,
-        category: "Drink",
-        image: "",
-    },
-]);
+const props = defineProps<{
+    products: Product[];
+}>();
+
+// state management
+const cart = useCartStore();
+
+const showModalDelete = ref(false);
+const selectedProduct = ref<Product | { id: null; name: null }>({
+    id: null,
+    name: null,
+});
+const openDeleteModal = (product: Product) => {
+    const isInCart = cart.items.some((item) => item.id === product.id);
+
+    // kalau ada dicart produk ga bisa di hapus
+    if (isInCart) {
+        notify({
+            title: "Tidak Bisa Dihapus",
+            text: "Produk ini masih ada di keranjang!",
+            type: "error",
+            duration: 3000,
+        });
+        return;
+    }
+
+    showModalDelete.value = true;
+    selectedProduct.value = { ...product };
+};
+
+function addToCart(product: Product) {
+    cart.addToCart({
+        id: product.id,
+        name: product.name,
+        price: Number(product.price),
+        image: product.image,
+        quantity: 1,
+    });
+
+    notify({
+        title: "Berhasil!",
+        text: `${product.name} ditambahkan ke keranjang.`,
+        type: "success",
+        duration: 2000,
+    });
+}
 </script>
 
 <template>
-    <div class="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-6">
+    <div
+        v-if="products.length === 0"
+        class="flex items-center justify-center col"
+    >
+        <p class="text-gray-500">Produk tidak tersedia</p>
+    </div>
+    <div v-else class="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-6">
         <div
             v-for="product in products"
             :key="product.id"
-            class="p-4 text-left bg-white border rounded-lg"
+            class="p-2 text-left bg-white border rounded-lg"
         >
-            <img
-                :src="product.image || '/assets/images/no_image.jpg'"
-                :alt="product.name"
-                class="object-contain w-full h-[177px] mb-2 rounded-lg"
-            />
+            <div class="relative">
+                <img
+                    :src="
+                        product.image
+                            ? `/storage/${product.image}`
+                            : '/assets/images/no_image.jpg'
+                    "
+                    :alt="product.name"
+                    class="w-full h-[177px] mb-4 rounded-lg object-cover"
+                />
+                <div
+                    @click.prevent="openDeleteModal(product)"
+                    class="absolute flex items-center justify-center p-1 bg-white border border-red-600 rounded-lg opacity-50 cursor-pointer bottom-2 right-2 backdrop-blur-md"
+                >
+                    <Trash2 class="w-6 h-6 text-red-600" />
+                </div>
+            </div>
             <h3 class="text-base text-[#0F0F0F] font-medium">
                 {{ product.name }}
             </h3>
             <p class="font-bold text-base text-[#23A948]">
-                Rp {{ product.price.toLocaleString("id-ID") }}
+                {{ formatRupiah(product.price) }}
             </p>
             <button
+                @click="addToCart(product)"
                 class="w-full px-3 flex items-center justify-center font-medium py-2 mt-2 text-base text-[#F5F5F5] transition bg-[#2C59E5] rounded-lg hover:bg-blue-700"
             >
                 <Plus color="white" />
@@ -103,4 +100,13 @@ const products = ref<Product[]>([
             </button>
         </div>
     </div>
+
+    <ModalDelete
+        :show="showModalDelete"
+        :data="selectedProduct"
+        link="products.destroy"
+        title="Hapus Produk"
+        message="Apakah Anda yakin ingin menghapus produk ini?"
+        @close="showModalDelete = false"
+    />
 </template>

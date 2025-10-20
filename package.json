@@ -22,7 +22,10 @@
         "vue-tsc": "^2.0.24"
     },
     "dependencies": {
+        "@kyvg/vue3-notification": "^3.4.1",
         "@tanstack/vue-table": "^8.21.3",
-        "lucide-vue-next": "^0.545.0"
+        "dayjs": "^1.11.18",
+        "lucide-vue-next": "^0.545.0",
+        "pinia": "^3.0.3"
     }
 }

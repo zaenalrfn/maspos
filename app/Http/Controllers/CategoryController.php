@@ -11,7 +11,9 @@ class CategoryController extends Controller
 {
     public function index()
     {
-        return Inertia::render('CategoryPage/Index');
+        return Inertia::render('CategoryPage/Index', [
+            'categories' => Category::withCount('products')->latest('created_at')->get(),
+        ]);
     }
 
     public function store(CreateUpdateCategoryRequest $request)
@@ -23,12 +25,12 @@ class CategoryController extends Controller
 
             return redirect()
                 ->route('categories.index')
-                ->with('success', 'Category created successfully.');
+                ->with('success', 'Kategori berhasil dibuat...');
         } catch (\Exception $e) {
             return redirect()
                 ->back()
                 ->withInput()
-                ->with('error', 'Failed to create category: ' . $e->getMessage());
+                ->with('error', 'Gagal membuat kategori: ' . $e->getMessage());
         }
     }
     public function update(CreateUpdateCategoryRequest $request, Category $category)
@@ -40,12 +42,12 @@ class CategoryController extends Controller
 
             return redirect()
                 ->route('categories.index')
-                ->with('success', 'Category updated successfully.');
+                ->with('success', 'Kategori berhasil diperbarui...');
         } catch (\Exception $e) {
             return redirect()
                 ->back()
                 ->withInput()
-                ->with('error', 'Failed to update category: ' . $e->getMessage());
+                ->with('error', 'Gagal memperbarui kategori: ' . $e->getMessage());
         }
     }
 
@@ -56,11 +58,11 @@ class CategoryController extends Controller
 
             return redirect()
                 ->route('categories.index')
-                ->with('success', 'Category deleted successfully.');
+                ->with('success', 'Kategori berhasil dihapus...');
         } catch (\Exception $e) {
             return redirect()
                 ->back()
-                ->with('error', 'Failed to delete category: ' . $e->getMessage());
+                ->with('error', 'Gagal menghapus kategori: ' . $e->getMessage());
         }
     }
 }

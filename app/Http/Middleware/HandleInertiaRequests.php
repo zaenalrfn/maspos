@@ -34,6 +34,15 @@ class HandleInertiaRequests extends Middleware
             'auth' => [
                 'user' => $request->user(),
             ],
+            'flash' => [
+                'success' => fn() => $request->session()->get('success'),
+                'error' => fn() => $request->session()->get('error'),
+                'transaction_total' => fn() => $request->session()->get('transaction_total'),
+                'created_at' => fn() => $request->session()->get('created_at'),
+            ],
+            'errors' => fn() => $request->session()->get('errors')
+                ? $request->session()->get('errors')->getBag('default')->getMessages()
+                : (object) [],
         ];
     }
 }
