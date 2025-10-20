@@ -21,7 +21,14 @@ function goBack() {
 
     <AuthenticatedLayout :categories="[]">
         <div class="w-full py-10 mx-auto">
-            <div class="mb-3 w-full flex justify-end">
+            <div class="flex justify-start w-full gap-4 mb-3">
+                <Link :href="route('dashboard')">
+                    <button
+                        class="px-4 py-2 text-[#2C59E5] border border-[#2C59E5] rounded-lg hover:bg-[#2C59E5] hover:text-white bg-transparent"
+                    >
+                        Kembali
+                    </button>
+                </Link>
                 <Link :href="route('transactions.history')">
                     <button
                         class="px-4 py-2 bg-[#2C59E5] hover:bg-blue-700 rounded-lg text-white"
