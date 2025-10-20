@@ -12,7 +12,7 @@ class CategoryController extends Controller
     public function index()
     {
         return Inertia::render('CategoryPage/Index', [
-            'categories' => Category::with('products')->latest('created_at')->get(),
+            'categories' => Category::withCount('products')->latest('created_at')->get(),
         ]);
     }
 

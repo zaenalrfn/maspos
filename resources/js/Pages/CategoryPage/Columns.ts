@@ -3,7 +3,7 @@ import { ColumnDef } from "@tanstack/vue-table";
 export interface Category {
     id: number;
     name: string;
-    products?: [];
+    products_count?: number;
     created_at?: string;
     updated_at?: string;
 }

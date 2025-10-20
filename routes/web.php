@@ -7,6 +7,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UpdateProfileController;
+use App\Http\Controllers\ReportController;
 use Inertia\Inertia;
 
 Route::get('/', function () {
@@ -51,6 +52,14 @@ Route::middleware('auth')->group(function () {
             Route::get('/transactions/history', 'transactionHistory')->name('history');
             Route::get('/transactions/{transaction_code}', 'transactionHistoryDetail')
                 ->name('show');
+        });
+
+    Route::controller(ReportController::class)
+        ->as('reports.')
+        ->group(function () {
+            Route::get('/reports', 'index')->name('index');
+            Route::get('/reports/export/pdf', 'exportPdf')->name('exportPdf');
+            Route::get('/reports/export/excel', 'exportExcel')->name('exportExcel');
         });
 });
 

@@ -9,7 +9,7 @@ import {
 } from "@tanstack/vue-table";
 import { ref, watch } from "vue";
 import type { SortingState } from "@tanstack/vue-table";
-import { ArrowRight, ArrowLeft } from "lucide-vue-next";
+import { ArrowRight, ArrowLeft, Edit, Trash } from "lucide-vue-next";
 
 interface Props<T> {
     data: T[];
@@ -77,7 +77,7 @@ const table = useVueTable({
         class="overflow-hidden bg-white border border-gray-200 shadow-sm rounded-xl"
     >
         <!-- Desktop Table -->
-        <div class="hidden overflow-x-auto md:block">
+        <div class="overflow-x-auto md:block">
             <table class="w-full">
                 <thead class="border-b border-gray-200 bg-gray-50">
                     <tr
@@ -134,15 +134,15 @@ const table = useVueTable({
                                 <div class="flex items-center gap-2">
                                     <button
                                         @click="emits('edit', row.original)"
-                                        class="px-3 py-1.5 border border-gray-300 rounded-md text-xs font-medium text-gray-700 hover:bg-gray-50 hover:border-blue-500 hover:text-blue-600 transition-colors"
+                                        class="px-3 py-1.5 border border-gray-300 rounded-md font-medium text-gray-700 hover:bg-gray-50 hover:border-blue-500 hover:text-blue-600 transition-colors"
                                     >
-                                        Edit
+                                        <Edit />
                                     </button>
                                     <button
                                         @click="emits('deleted', row.original)"
-                                        class="px-3 py-1.5 border border-gray-300 rounded-md text-xs font-medium text-red-600 hover:bg-red-50 hover:border-red-500 transition-colors"
+                                        class="px-3 py-1.5 border border-gray-300 rounded-md font-medium text-red-600 hover:bg-red-50 hover:border-red-500 transition-colors"
                                     >
-                                        Hapus
+                                        <Trash />
                                     </button>
                                 </div>
                             </template>

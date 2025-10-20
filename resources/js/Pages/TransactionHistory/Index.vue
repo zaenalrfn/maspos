@@ -54,13 +54,19 @@ watch(searchQuery, (value) => {
                 Riwayat Transaksi
             </h2>
 
-            <div class="flex justify-start mb-4">
+            <div class="flex flex-col justify-start gap-2 mb-4 md:flex-row">
                 <input
                     v-model="searchQuery"
                     type="text"
                     placeholder="Cari kode, metode, atau status..."
                     class="px-4 py-2 text-sm border border-[#2C59E5] rounded-lg w-72 focus:ring-2 focus:ring-blue-400 focus:outline-none"
                 />
+                <Link
+                    :href="route('reports.index')"
+                    class="px-4 py-2 bg-[#2C59E5] rounded-lg text-white hover:bg-blue-700"
+                >
+                    Report Data
+                </Link>
             </div>
 
             <div
