@@ -3,7 +3,7 @@ import { watch, ref, computed } from "vue";
 import { useForm, Head, usePage } from "@inertiajs/vue3";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
 import InputError from "@/Components/InputError.vue";
-import { Notifications, notify } from "@kyvg/vue3-notification";
+import { notify } from "@kyvg/vue3-notification";
 import { formatRupiahInput, parseRupiahToNumber } from "@/utils/formatRupiah";
 
 interface Category {
@@ -88,9 +88,8 @@ const handleSubmit = () => {
     <Head title="Tambah Produk" />
 
     <AuthenticatedLayout :categories="categories">
-        <div class="py-12">
+        <div>
             <div class="w-full">
-                <Notifications />
                 <div class="flex items-center justify-center min-h-screen">
                     <div
                         class="w-full max-w-md p-6 bg-white shadow-md rounded-2xl sm:p-8"

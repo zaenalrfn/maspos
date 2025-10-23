@@ -138,15 +138,14 @@ onMounted(() => {
 
 <template>
     <div>
-        <Notifications />
-        <h2 class="text-lg font-medium text-gray-900 mb-2">
+        <h2 class="mb-2 text-lg font-medium text-gray-900">
             Update Foto Profil
         </h2>
 
         <!-- Loading State -->
-        <div v-if="isFetching" class="mb-6 flex items-center justify-center">
+        <div v-if="isFetching" class="flex items-center justify-center mb-6">
             <div
-                class="w-32 h-32 bg-gray-100 rounded-lg flex items-center justify-center"
+                class="flex items-center justify-center w-32 h-32 bg-gray-100 rounded-lg"
             >
                 <svg
                     class="animate-spin h-8 w-8 text-[#2C59E5]"
@@ -174,14 +173,14 @@ onMounted(() => {
         <template v-else>
             <!-- Current Image -->
             <div v-if="currentImageUrl && !previewUrl" class="mb-6">
-                <label class="block text-sm font-medium text-gray-700 mb-2">
+                <label class="block mb-2 text-sm font-medium text-gray-700">
                     Gambar Saat Ini
                 </label>
                 <div class="relative inline-block">
                     <img
                         :src="currentImageUrl"
                         alt="Current profile"
-                        class="w-32 h-32 object-cover rounded-lg border-2 border-gray-300"
+                        class="object-cover w-32 h-32 border-2 border-gray-300 rounded-lg"
                     />
                     <button
                         type="button"
@@ -192,7 +191,7 @@ onMounted(() => {
                     >
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
-                            class="h-4 w-4"
+                            class="w-4 h-4"
                             viewBox="0 0 20 20"
                             fill="currentColor"
                         >
@@ -209,11 +208,11 @@ onMounted(() => {
             <!-- No Image -->
             <div v-else-if="!currentImageUrl && !previewUrl" class="mb-6">
                 <div
-                    class="w-32 h-32 bg-gray-100 rounded-lg flex items-center justify-center border-2 border-dashed border-gray-300"
+                    class="flex items-center justify-center w-32 h-32 bg-gray-100 border-2 border-gray-300 border-dashed rounded-lg"
                 >
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        class="h-12 w-12 text-gray-400"
+                        class="w-12 h-12 text-gray-400"
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
@@ -226,12 +225,12 @@ onMounted(() => {
                         />
                     </svg>
                 </div>
-                <p class="text-sm text-gray-500 mt-2">Belum ada gambar</p>
+                <p class="mt-2 text-sm text-gray-500">Belum ada gambar</p>
             </div>
 
             <!-- Preview New Image -->
             <div v-if="previewUrl" class="mb-6">
-                <label class="block text-sm font-medium text-gray-700 mb-2">
+                <label class="block mb-2 text-sm font-medium text-gray-700">
                     Preview Gambar Baru
                 </label>
                 <div class="relative inline-block">
@@ -248,7 +247,7 @@ onMounted(() => {
                     >
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
-                            class="h-4 w-4"
+                            class="w-4 h-4"
                             viewBox="0 0 20 20"
                             fill="currentColor"
                         >
@@ -266,7 +265,7 @@ onMounted(() => {
             <div class="mb-6">
                 <label
                     for="imageInput"
-                    class="block text-sm font-medium text-gray-700 mb-2"
+                    class="block mb-2 text-sm font-medium text-gray-700"
                 >
                     {{ currentImageUrl ? "Pilih Gambar Baru" : "Pilih Gambar" }}
                 </label>
@@ -276,9 +275,9 @@ onMounted(() => {
                     accept="image/*"
                     @change="handleFileChange"
                     :disabled="isLoading"
-                    class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 disabled:opacity-50 cursor-pointer"
+                    class="block w-full text-sm text-gray-500 cursor-pointer file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 disabled:opacity-50"
                 />
-                <p class="text-xs text-gray-500 mt-1">
+                <p class="mt-1 text-xs text-gray-500">
                     Format: JPG, PNG (Max: 2MB)
                 </p>
             </div>
@@ -296,7 +295,7 @@ onMounted(() => {
                         class="flex items-center justify-center gap-2"
                     >
                         <svg
-                            class="animate-spin h-4 w-4"
+                            class="w-4 h-4 animate-spin"
                             xmlns="http://www.w3.org/2000/svg"
                             fill="none"
                             viewBox="0 0 24 24"

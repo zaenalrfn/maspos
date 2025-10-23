@@ -96,7 +96,6 @@ onMounted(() => {
         @search="handleSearch"
     >
         <div class="py-12">
-            <Notifications />
             <div class="w-full">
                 <div id="product-section">
                     <ProductComponent :products="filteredProducts" />

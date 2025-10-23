@@ -7,9 +7,12 @@ interface Category {
     id: number | null;
     name: string | null;
 }
-
+interface Error {
+    name: string | null;
+}
 const props = defineProps<{
     show: boolean;
+    errors: Error;
     data: Category;
 }>();
 
@@ -44,6 +47,7 @@ const handleSubmit = () => {
                 emits("saved");
                 emits("close");
             },
+            onFinish: () => form.clearErrors(),
         });
     } else {
         // Mode create
@@ -52,6 +56,7 @@ const handleSubmit = () => {
                 emits("saved");
                 emits("close");
             },
+            onFinish: () => form.clearErrors(),
         });
     }
 };
@@ -83,6 +88,11 @@ const handleSubmit = () => {
                             </label>
                             <input
                                 v-model="form.name"
+                                :class="
+                                    errors.name
+                                        ? 'border-red-500 focus:border-red-500'
+                                        : ''
+                                "
                                 class="w-full px-3 py-2 border border-gray-300 rounded"
                                 type="text"
                                 id="name"
@@ -92,9 +102,7 @@ const handleSubmit = () => {
                             <InputError
                                 class="mt-2"
                                 :message="
-                                    Array.isArray(form.errors.name)
-                                        ? form.errors.name[0]
-                                        : form.errors.name
+                                    errors.name ? errors.name[0] ?? '' : ''
                                 "
                             />
                         </div>
