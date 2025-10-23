@@ -46,13 +46,8 @@ const downloadExcel = () => {
 
 <template>
     <Head title="Report" />
-    <AuthenticatedLayout
-        :categories="categories"
-        @filter="handleFilter"
-        @search="handleSearch"
-    >
+    <AuthenticatedLayout :categories="[]">
         <div class="py-12">
-            <Notifications />
             <div class="w-full">
                 <div class="p-4 bg-white rounded-lg">
                     <h2 class="mb-4 text-2xl font-semibold">

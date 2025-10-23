@@ -14,6 +14,7 @@ interface Props {
 
 // handle notification
 const flash = computed(() => usePage().props.flash);
+const errors = computed(() => usePage().props.errors);
 watch(
     flash,
     (value: any) => {
@@ -35,6 +36,17 @@ watch(
     },
     { immediate: true }
 );
+
+watch(errors, (value: any) => {
+    if (value?.name) {
+        notify({
+            title: "Error!",
+            text: value.name,
+            type: "error",
+            duration: 3000,
+        });
+    }
+});
 
 const props = defineProps<Props>();
 const showModal = ref(false);
@@ -75,7 +87,6 @@ const openDeleteModal = (category: any) => {
     <Head title="Daftar Kategori" />
     <AuthenticatedLayout :categories="categories">
         <div class="px-4 py-6 mx-auto sm:px-6 lg:px-8 max-w-7xl">
-            <Notifications />
             <!-- Page Header -->
             <div
                 class="flex flex-col gap-4 mb-6 sm:flex-row sm:items-center sm:justify-between"
@@ -120,6 +131,7 @@ const openDeleteModal = (category: any) => {
             <!-- Modal Create/Update Category -->
             <ModalCreateUpdateCategori
                 :show="showModal"
+                :errors="{ name: errors?.name ?? '' }"
                 :data="selectedCategory"
                 @close="showModal = false"
                 @saved="router.reload({ only: ['categories'] })"

@@ -13,8 +13,8 @@ const emit = defineEmits(["filter", "search"]);
 
 <template>
     <div>
+        <Notifications style="top: 25px; right: 20px" />
         <div class="min-h-screen p-4 bg-[#EDF0F2] md:p-8">
-            <Notifications />
             <!-- Navigation -->
             <Navbar
                 :categories="categories"
